@@ -2,6 +2,11 @@ module.exports = function toReadable (number) {
     let strOfNum = number.toString();
     let solution = "";
 
+    if (number===0) {
+        solution = 'zero';
+        return solution;
+    }
+
     if (number<10) {
         solution = getUnits(strOfNum);
         return solution;
@@ -31,7 +36,10 @@ module.exports = function toReadable (number) {
         } else if (strOfNum.substr(1, 2)*1 >9 && strOfNum.substr(1, 2) < 20) {
             solution = `${getUnits(strOfNum[0])} hundred ${getElevenToNineteen(strOfNum.substr(1, 2))}`;
             return solution;
-        } else  { solution = `${getUnits(strOfNum[0])} hundred ${getDecemals(strOfNum[1])} ${getUnits(strOfNum[2])}`;
+        } else  {
+            preSol="";
+            preSol = `${getUnits(strOfNum[0])} hundred ${getDecemals(strOfNum[1])} ${getUnits(strOfNum[2])}`;
+            solution = preSol.replace(/\s+/g, ' ').trim();
             return solution;
         };
 
@@ -42,7 +50,7 @@ module.exports = function toReadable (number) {
     function getUnits(value) {
         switch (value) {
             case '0':
-                return null;
+                return '';
             case '1':
                 return 'one';
             case '2':
@@ -91,6 +99,8 @@ module.exports = function toReadable (number) {
 
     function getDecemals(value) {
         switch (value) {
+            case '0':
+                return '';
             case '2':
                 return 'twenty';
             case '3':
